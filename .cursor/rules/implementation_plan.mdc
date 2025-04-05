@@ -1,0 +1,201 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+# Implementation plan
+
+This implementation plan is organized into five phases. Please carefully follow each step and check your project directory before initializing any new component.
+
+## Phase 1: Environment Setup
+
+1.  **Prevalidation Check:**
+
+    *   Check if the current directory already contains a project (e.g., check for package.json, .cursor/ directory, etc.). If it exists, avoid re-initializing the project. *(Project Overview: Internal tool requirements)*
+
+2.  **Install Required Tools:**
+
+    *   Verify Node.js v20.2.1 is installed. If not, install it. *(Tech Stack: Core Tools)
+    *   Verify Python 3.x is installed as required for backend automation. *(Project Overview: SEO Writing Tool automation)*
+    *   **Validation:** Run `node -v` and `python --version` to ensure correct versions.
+
+3.  **Initialize Next.js 14 Project:**
+
+    *   Create a new Next.js 14 project with TypeScript using the official starter kit (Note: Next.js 14 is enforced in this project for compatibility with current AI coding tools). *(Tech Stack: Frontend)
+    *   **Validation:** Confirm the project scaffolding exists with `next info`.
+
+4.  **Set Up Tailwind CSS and Shadcn UI:**
+
+    *   Install and configure Tailwind CSS by creating `tailwind.config.js` in the root directory and adding the accent colors: #E94E19, #F39200, #1D2B4C. *(UI/UX Requirements)
+    *   Integrate Shadcn UI components as per design guidelines.
+    *   **Validation:** Run the Next.js development server and verify Tailwind styles are applied.
+
+5.  **Configure IDE (Cursor) Environment (Optional but Preferred):**
+
+    *   If using Cursor for AI-powered coding, create a `cursor_metrics.md` file in the project root.
+    *   Next, check if a `.cursor` directory exists; if not, create it.
+    *   Inside the `.cursor` directory, create a file called `mcp.json` if it doesn’t exist.
+    *   Add the following configuration (choose macOS or Windows accordingly): **For macOS:**
+
+    `{ "mcpServers": { "supabase": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-postgres", "<connection-string>"] } } }`
+
+    **For Windows:**
+
+    `{ "mcpServers": { "supabase": { "command": "cmd", "args": ["/c", "npx", "-y", "@modelcontextprotocol/server-postgres", "<connection-string>"] } } }`
+
+    *   **Instruction:** Visit [Supabase MCP Connection](https://supabase.com/docs/guides/getting-started/mcp#connect-to-supabase-using-mcp) to retrieve your connection string and replace `<connection-string>` in the configuration.
+    *   **Validation:** Navigate to Settings/MCP in Cursor to ensure the connection displays a green active status.
+
+6.  **Set Up Supabase for Backend:**
+
+    *   Follow Supabase documentation to configure your Postgres database. Obtain your connection string from Supabase as referenced above.
+    *   **Validation:** Test the connection locally using Supabase CLI or equivalent tool.
+
+## Phase 2: Frontend Development
+
+1.  **Project Structure and Directory Setup:**
+
+    *   Organize your Next.js project by creating folders for components, pages, and services.
+    *   Example directories: `/components`, `/pages`, `/services`.
+    *   **Validation:** Ensure directory structure matches the Next.js conventions.
+
+2.  **Create Authentication Pages:**
+
+    *   Create a login page at `/pages/login.tsx` and include forms to interact with Clerk Auth. *(Key Features: Authentication and Role-Based Access Control)*
+    *   **Validation:** Run the Next.js server and ensure the login page renders correctly.
+
+3.  **Develop Internal Dashboard Page:**
+
+    *   Create an internal dashboard interface at `/pages/dashboard/internal.tsx` that displays client overviews, task progress, and user management controls.
+    *   **Validation:** Verify the UI elements are visible and styled as per the design guide.
+
+4.  **Develop Client Interface Page:**
+
+    *   Create client report view at `/pages/dashboard/client.tsx` that allows viewing monthly reports and comment functionalities. *(Key Features: Client Interface with Commenting)*
+    *   **Validation:** Check user role restrictions and interface layout.
+
+5.  **Implement SEO Writing Tool Interface:**
+
+    *   Create a dedicated page `/pages/seo-tool.tsx` for the guided SEO writing workflow with steps for keyword research, content structure generation, and AI-powered editing. *(Key Features: SEO Writing Tool Workflow)
+    *   **Validation:** Ensure the step-by-step workflow is accessible and interactive.
+
+6.  **Set Up Tailwind and Shadcn UI Components:**
+
+    *   Use Tailwind CSS classes and Shadcn UI components to design form inputs, buttons, and dashboards.
+    *   **Validation:** Test UI components in development mode for responsiveness and style correctness.
+
+## Phase 3: Backend Development
+
+1.  **Initialize Back-End Environment using Supabase and Python:**
+
+    *   Set up Supabase as your primary Postgres database. *(Tech Stack: Backend, Data Requirements)
+    *   Configure Clerk Auth for authentication.
+    *   **Validation:** Test connection to Supabase from a Python script.
+
+2.  **Design Database Schema:**
+
+    *   Create tables for users, clients, tasks, SEO data, content (Markdown storage), and backlinks. Ensure relations capture client tasks, reporting, and SEO workflow data.
+    *   **Validation:** Use Supabase SQL editor or psql client to inspect table schemas.
+
+3.  **Implement API Endpoint for Authentication and Role Management:**
+
+    *   Create an API endpoint (e.g., `POST /api/auth/login`) using your preferred Python web framework.
+    *   Ensure role-based access tokens are generated for internal team versus client users. *(Key Features: Authentication and Role-Based Access Control)
+    *   **Validation:** Test the endpoint using Postman or curl for proper response and error handling.
+
+4.  **Implement API for Internal Dashboard Data:**
+
+    *   Develop endpoints such as `GET /api/dashboard/internal` to fetch client overviews, task data, and reports. *(Key Features: Internal Team Dashboard)
+    *   **Validation:** Send requests to verify JSON response structure and data integrity.
+
+5.  **Develop API Endpoints for SEO Writing Tool Workflow:**
+
+    *   Create APIs for each step:
+
+        *   `GET /api/seo/keyword-research` to trigger headless browser automation using YourText.guru via Python. *(Key Features: YourText.guru Integration)
+        *   `POST /api/seo/content-structure` to auto-generate and save content structure (headings, bullet points, etc.).
+        *   `POST /api/seo/segment-content` to generate and store segmented content per article section.
+        *   `POST /api/seo/semantic-analysis` to send content for SEO scoring and competitor analysis.
+
+    *   **Validation:** Each endpoint must return appropriate status codes and perform error handling for API call failures.
+
+6.  **Implement API for AI-Powered Content Editing:**
+
+    *   Create an endpoint `POST /api/seo/ai-edit` that accepts user text and editing requests (shorten, lengthen, optimize, format) and routes them to the predefined AI models (Claude 3.5 Sonnet, GPT-4, Gemini 2.5 Pro). *(Key Features: AI Model Selection and Editing)
+    *   **Validation:** Simulate an API call and verify that the selected model override works as expected.
+
+7.  **Backlink Management API:**
+
+    *   Develop endpoints for backlink tasks (e.g., `POST /api/backlinks`) that record backlink source, target URL on the client website, and backlink type. *(Key Features: Backlink Management)
+    *   **Validation:** Ensure correct relational data insertion in the database.
+
+## Phase 4: Integration
+
+1.  **Integrate Frontend with Authentication API:**
+
+    *   Connect login form in `/pages/login.tsx` to the `POST /api/auth/login` endpoint using Clerk Auth. *(Key Features: Authentication Integration)
+    *   **Validation:** Test login functionality and role-based redirects.
+
+2.  **Connect Dashboard Pages to Backend Endpoints:**
+
+    *   For internal dashboard, integrate API calls (via axios or fetch) in `/services/dashboardService.ts` to retrieve internal task and report data.
+    *   For the client interface, integrate endpoints to fetch monthly reports and enable commenting.
+    *   **Validation:** Submit test data to ensure proper data flow between frontend and backend.
+
+3.  **Integrate SEO Writing Tool Workflow:**
+
+    *   Link UI components with corresponding API endpoints for keyword research, content structure, content segmentation, and semantic analysis. *(Key Features: SEO Writing Tool Workflow)
+    *   **Validation:** Walk through the entire SEO writing process in the browser to verify each step returns expected outputs.
+
+4.  **Integrate YourText.guru Headless Browser Automation:**
+
+    *   In your Python backend module, implement a headless browser script to log in to YourText.guru, manage cookies, and scrape required SEO metrics (n-grams, entities, SEO/DSEO scores). *(Important Considerations: YourText.guru Integration)
+    *   **Validation:** Run the automation script standalone and log outputs with a valid YourText.guru article ID.
+
+5.  **Implement Role-Based Access on Frontend:**
+
+    *   Ensure that internal team users see the full dashboard while clients see a read-only report view with comment functionality. *(Key Features: Client Permissions)
+    *   **Validation:** Test by simulating different user roles.
+
+## Phase 5: Deployment
+
+1.  **Containerize the Application for Local Development:**
+
+    *   Create a Dockerfile for the Next.js frontend and a separate one (or multi-stage build) for the Python backend. *(Tech Stack: CI/CD, Deployment)
+    *   **Validation:** Run `docker-compose up` locally to verify containers start without errors.
+
+2.  **Set Up GitHub Actions for CI/CD:**
+
+    *   Create a workflow file (e.g., `.github/workflows/ci.yml`) that builds the project, runs tests, and deploys to Hostinger VPS.
+    *   **Validation:** Commit changes and verify that GitHub Actions pipeline runs to completion.
+
+3.  **Deploy to Hostinger VPS:**
+
+    *   Set up the Hostinger VPS (configuration: 2 vCPU, 8GB RAM, 100GB NVMe) and deploy your Docker containers.
+    *   **Validation:** Access the production URL and confirm that both frontend and backend endpoints are reachable.
+
+4.  **Monitor and Logging Setup:**
+
+    *   Implement basic logging and error monitoring on both frontend and backend. Consider using a logging service or local logs to track API call errors and user interactions.
+    *   **Validation:** Simulate errors to verify logging outputs.
+
+## Final Pre-Deployment Checks
+
+1.  **Review API Endpoint Security:**
+
+    *   Ensure all endpoints have robust error handling and validations, particularly around role-based access and third-party integrations. *(Data Requirements, Key Features)
+    *   **Validation:** Perform security testing on endpoints using automated tools.
+
+2.  **Conduct End-to-End Testing:**
+
+    *   Execute comprehensive tests (unit, integration, end-to-end) to simulate real user flows from login to SEO tool usage. *(Key Questions Answered, Q&A: Pre-Launch Checklist)
+    *   **Validation:** Use testing frameworks (e.g., Cypress) to confirm 100% coverage of critical paths.
+
+3.  **Documentation and Readme Update:**
+
+    *   Update the project README and include setup instructions, API documentation, and troubleshooting tips.
+    *   **Validation:** Have a peer review the documentation for completeness and clarity.
+
+This concludes the step-by-step implementation plan for the Seoptimizer project. Follow each phase in sequence, validate frequently with the provided checks, and ensure that all integrations (especially with Supabase, YourText.guru, and AI models) are functioning as required.

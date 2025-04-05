@@ -1,0 +1,91 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+# Tech Stack Document
+
+This document explains the various technologies chosen for the Seoptimizer project. It is designed to be easy to understand even for non-technical users. Below, you’ll find a breakdown of the frontend and backend choices, the hosting and deployment setup, any third‑party integrations, as well as the security and performance measures in place.
+
+## Frontend Technologies
+
+The frontend is everything that users interact with directly. For Seoptimizer, we have chosen modern, efficient, and user-friendly tools:
+
+*   **Next.js 14 with TypeScript**: Provides a robust and scalable framework for building interactive web pages and ensures our code is more predictable and less prone to errors.
+*   **Tailwind CSS**: A utility-first CSS framework that allows for quick and responsive design. It helps us build a modern and clean user interface using predesigned classes.
+*   **Shadcn UI Components**: Prebuilt, beautifully designed UI components that speed up development and ensure consistency in the overall user experience.
+
+These tools combine to create a fast, responsive, and visually appealing interface, making sure that both your internal team and clients have a smooth experience when using the application.
+
+## Backend Technologies
+
+The backend is where all the data is stored, processed, and secured. It supports the functionality of the application by connecting everything together behind the scenes. For Seoptimizer, we use:
+
+*   **Supabase & Postgres**: Supabase acts as our backend platform, while Postgres handles data storage. Together, they ensure that the system is reliable and can securely manage all the content, user data, and SEO results.
+*   **Clerk Auth**: Manages user authentication and role-based access. This ensures that only authorized internal team members can access sensitive parts of the application, while clients have controlled, read-only access.
+*   **Python (for specific automation tasks)**: Used for scripting important background tasks like interacting with external services (e.g., automating actions in YourText.guru) and managing headless browser sessions.
+*   **Custom API endpoints**: Built on top of Supabase/Postgres, these endpoints handle tasks such as content generation, markdown processing, and data synchronisation with external services.
+
+All these backend components work together to provide a secure, robust, and efficient environment that powers all the functionality of Seoptimizer.
+
+## Infrastructure and Deployment
+
+For making the application available, we have chosen infrastructure and tools that ensure a smooth and reliable deployment process:
+
+*   **GitHub Actions**: Automates development workflows and continuous integration/continuous deployment (CI/CD). It ensures that every new piece of code is tested and deployed seamlessly.
+
+*   **Docker**: Provides containerization which helps simulate a consistent local development environment. This means developers can work without worrying about differences between their local setup and the live system.
+
+*   **Hostinger VPS**: The application will be deployed on a virtual private server (VPS) provided by Hostinger. The VPS is configured with:
+
+    *   2 vCPU cores
+    *   8GB RAM
+    *   100GB NVMe storage
+
+These choices guarantee that Seoptimizer is scalable, reliable, and efficient during deployment and daily operations.
+
+## Third-Party Integrations
+
+Third-party integrations allow Seoptimizer to leverage specialized services without reinventing the wheel. Here are the external services we’re integrating:
+
+*   **YourText.guru**: Integrates through custom browser automation. It provides essential SEO data like semantic analysis, n-grams, and keyword optimization. The system manages logins and cookie storage to keep the integration smooth and efficient.
+
+*   **AI Models**: The tool uses advanced AI models for content creation and editing. These include:
+
+    *   Claude 3.5 Sonnet (and Claude 3.7 Sonnet for enhanced AI-powered coding suggestions)
+    *   GPT-4
+    *   Gemini 2.5 Pro
+
+*   **Perplexity & Firecrawl**: Perplexity is used for web data gathering while Firecrawl is employed for competitor analysis by scraping key information from the first five search results.
+
+These integrations add powerful features – like automated semantic analysis, dynamic competitor insights, and AI-driven content generation – making the tool both intelligent and responsive.
+
+## Security and Performance Considerations
+
+Security and performance are priorities to ensure that Seoptimizer is both safe and efficient.
+
+*   **User Authentication & Role-Based Access**: Using Clerk Auth, the system guarantees that internal users have full privileges while clients receive a restricted, view-only experience with the ability to comment on designated tasks.
+
+*   **Secure API Endpoints**: Every transaction from content creation to semantic analysis is handled by robust, secure API endpoints with data validation and rate limiting in place.
+
+*   **Cookie Management & Headless Browser Automation**: For the integration with YourText.guru, we securely manage login sessions and cookies, reducing the need for repeated logins while ensuring security protocols are followed.
+
+*   **Performance Optimizations**:
+
+    *   Real-time data processing so that fetches and updates occur quickly.
+    *   Efficient use of modern frameworks (Next.js, Tailwind CSS) ensures quick load times and a responsive UI.
+
+These measures collectively ensure that the application remains secure, reliable, and quick to respond, thereby providing a pleasant user experience.
+
+## Conclusion and Overall Tech Stack Summary
+
+To recap, Seoptimizer has been built using a thoughtfully chosen mix of modern technologies:
+
+*   **Frontend**: Next.js 14 + TypeScript, Tailwind CSS, and Shadcn UI – all helping to create a fast, interactive, and modern user interface.
+*   **Backend**: Supabase with Postgres, along with Clerk Auth and Python-powered automation – ensuring powerful and secure data management and operations.
+*   **Infrastructure**: Docker, GitHub Actions, and deployment on a Hostinger VPS – ensuring smooth development workflows and reliable hosting.
+*   **Third-Party Integrations**: Incorporation of YourText.guru, advanced AI models like Claude 3.5 Sonnet, GPT-4, and Gemini 2.5 Pro, as well as data gathering tools like Perplexity and Firecrawl – these drive intelligent insights and automated SEO enhancements.
+
+This unique combination of technologies not only fulfills the project’s requirements but also provides a strong foundation for future improvements. With security, performance, and ease of use at its core, Seoptimizer is set up to streamline your SEO processes effectively while offering powerful tools to manage and optimize content seamlessly.

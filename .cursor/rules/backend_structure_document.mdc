@@ -1,0 +1,181 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+# Backend Structure Document
+
+This document provides an in-depth look at the backend architecture and infrastructure components for Seoptimizer – an internal web-based SEO tool designed for managing client work, automating article creation, and performing task executions within an SEO agency. This guide is written in everyday language to ensure clarity and ease of understanding.
+
+## 1. Backend Architecture
+
+The backend is designed to be robust, scalable, and maintainable. It follows modern design patterns and leverages industry-standard frameworks:
+
+*   **Design Approach:**
+
+    *   Uses a layered architecture separating concerns (API, business logic, and data access) to allow easier maintenance and upgrades.
+    *   Emphasizes modularity via microservices-style principles where possible, allowing sections of the backend to evolve independently.
+
+*   **Key Frameworks and Technologies:**
+
+    *   **Supabase/Postgres:** As the primary database solution.
+    *   **Clerk Auth:** For user authentication and role-based access control.
+    *   **Docker & GitHub Actions:** For containerization and continuous integration/deployment setups.
+
+*   **Scalability & Performance:**
+
+    *   The use of Supabase ensures that the database can scale as data grows.
+    *   Docker provides consistency across environments, and GitHub Actions facilitate automated testing, deployment and scaling adjustments.
+    *   The design integrates headless browser automation for YourText.guru and other third-party services, ensuring that additional processing loads are handled separately from core transaction processing.
+
+## 2. Database Management
+
+Data is managed using Supabase with a Postgres database. Here’s what you need to know:
+
+*   **Database Technologies:**
+
+    *   **SQL Database (Postgres):** Ideal for structured data such as user profiles, tasks, articles, SEO analysis results, and AI model configurations.
+    *   The use of Postgres ensures strong data integrity and advanced querying features.
+
+*   **Data Structure & Access:**
+
+    *   Information such as user details, client information, tasks, keywords, and content articles are stored in clearly defined tables with relationships set up to avoid data duplication.
+    *   Data retrieval and manipulation are handled through secure API endpoints connecting directly to Supabase.
+    *   Regular backups and incremental storage practices are in place to maintain data safety and performance.
+
+## 3. Database Schema
+
+Below is a human-readable overview of the database schema for Seoptimizer. If we were using SQL (Postgres), the schema would include tables such as:
+
+*   **Users Table:**
+
+    *   Stores user details including ID, name, email, role (internal or client), and authentication credentials.
+
+*   **Clients Table:**
+
+    *   Contains client-specific information and links to user records.
+
+*   **Tasks Table:**
+
+    *   Lists all tasks related to client projects (article generation, backlink checks, etc.).
+    *   Contains details such as task type, status, and timestamps for creation and modifications.
+
+*   **Articles Table:**
+
+    *   Stores content in Markdown format along with related metadata like language (English/French), SEO scores, and timestamps.
+
+*   **Keywords & SEO Data:**
+
+    *   A dedicated table or set of tables that tracks keywords, semantic entities, and competitor data fetched from YourText.guru, Firecrawl, and Perplexity.
+
+*   **AI Models Table:**
+
+    *   Manages configurations for AI models (Claude 3.5 Sonnet, GPT-4, Gemini 2.5 Pro) including model selection defaults and override options.
+
+For a more formal SQL schema example, you might have definitions similar to:
+
+*   Users (id, name, email, role, created_at, updated_at)
+*   Clients (id, user_id, client_name, contact_info, created_at, updated_at)
+*   Tasks (id, client_id, task_type, details, status, created_at, updated_at)
+*   Articles (id, task_id, content_markdown, language, seo_score, created_at, updated_at)
+*   Keywords (id, article_id, keyword, related_data, created_at)
+*   AI_Models (id, model_name, configuration, is_default, created_at)
+
+## 4. API Design and Endpoints
+
+The APIs serve as the connection between the frontend and backend ensuring secure and efficient data transactions:
+
+*   **API Approach:**
+
+    *   Follows RESTful design principles to keep endpoints clear and predictable.
+    *   Ensures that data requests and updates are simple yet powerful enough to handle complex business logic, like retrieving SEO reports or managing task statuses.
+
+*   **Key Endpoints and Functions:**
+
+    *   **Authentication Endpoints:** Handled by Clerk Auth to register, login, and manage user sessions along with role-based permissions.
+    *   **Dashboard Data Endpoints:** Provide internal users with client overviews, progress tracking, and detailed task information.
+    *   **Content Generation Endpoints:** Facilitate the SEO Writing Tool steps such as fetching keyword data, competitor analysis, and content structuring.
+    *   **Integration Endpoints:** Connect to external services like YourText.guru, Firecrawl, and Perplexity for additional SEO insights.
+    *   **Commenting and Reporting Endpoints:** Allow clients to view reports and add comments in a controlled interface.
+
+## 5. Hosting Solutions
+
+The application is hosted on a Hostinger VPS. This is the plan for hosting:
+
+*   **Environment:**
+
+    *   **Hostinger VPS:** Utilizes a VPS with 2 vCPUs, 8GB RAM, and 100GB NVMe storage.
+    *   Designed to handle expected workloads with room for scaling. Virtual Server allows for better control over resource allocation.
+
+*   **Benefits:**
+
+    *   **Reliability:** Stable server environment with dedicated resources.
+    *   **Scalability:** Easy to scale by adjusting VPS specs or migrating to a larger instance if needed.
+    *   **Cost-effective:** Balanced pricing for the intended performance levels.
+
+## 6. Infrastructure Components
+
+To ensure high performance and reliability, several infrastructure components work together:
+
+*   **Load Balancers:** Distribute incoming traffic evenly ensuring no single server gets overwhelmed. This improves response times and overall reliability.
+
+*   **Caching Mechanisms:** Utilize caching (possibly via built-in Supabase tools or external services) to store frequently accessed data, reducing database load.
+
+*   **Content Delivery Network (CDN):** Although not explicitly mentioned, a CDN can be integrated in the future to deliver static assets quickly to users worldwide.
+
+*   **DevOps Tools:**
+
+    *   **Docker:** For containerizing the application ensuring consistency in deployment across environments.
+    *   **GitHub Actions:** Manages CI/CD, accelerating deployment cycles and maintaining code quality through automated testing.
+
+## 7. Security Measures
+
+Security is a prime consideration throughout Seoptimizer’s backend setup:
+
+*   **Authentication and Authorization:**
+
+    *   **Clerk Auth:** Provides secure user authentication and maintains role-based access control. Internal users get full privileges while clients see only selected reports and have commenting capabilities.
+
+*   **Data Encryption:**
+
+    *   Data in transit is encrypted using HTTPS.
+    *   Sensitive data in the database is protected with encryption where necessary.
+
+*   **Third-Party Integration Security:**
+
+    *   Headless browser automation for YourText.guru ensures that login credentials and cookies are securely managed.
+    *   All external service calls are made securely with proper error handling and rate limiting procedures.
+
+*   **Best Practices:**
+
+    *   Regular security audits, automated dependency checks, and using industry-standard practices for securing APIs and databases.
+
+## 8. Monitoring and Maintenance
+
+Ensuring the backend is always healthy and up-to-date is critical to the overall success.
+
+*   **Monitoring Tools and Practices:**
+
+    *   Real-time server logs, performance metrics, and error reporting are monitored through tools integrated into the hosting environment and supplementary third-party systems.
+    *   Alerts and dashboards are set up to track CPU, memory usage, and API response times, ensuring quick reaction times for any performance drops.
+
+*   **Maintenance Strategies:**
+
+    *   Scheduled maintenance windows for updates and backups.
+    *   Regular data backups and disaster recovery protocols are in place.
+    *   Continuous integration pipelines (via GitHub Actions) ensure that any code changes undergo rigorous testing before production deployment.
+
+## 9. Conclusion and Overall Backend Summary
+
+This backend structure for Seoptimizer is designed to be clear, scalable, and secure. Key takeaways include:
+
+*   A modular architecture separating responsibilities, thus ensuring maintainability while handling future integrations like headless browser automation and advanced SEO tools.
+*   Robust database management with Supabase/Postgres to safely store and efficiently retrieve data.
+*   A RESTful API design which facilitates smooth communication and integration between the frontend and external services.
+*   A reliable hosting setup on a Hostinger VPS that provides solid performance and the potential for scalable growth.
+*   Emphasis on stringent security measures to protect user data and system integrity.
+*   Well-defined monitoring and maintenance practices ensuring that the backend remains performant and up-to-date over time.
+
+By aligning these components with the core goals of Seoptimizer, the backend is well-suited to deliver a secure, efficient, and user-friendly experience for both internal teams and client users.

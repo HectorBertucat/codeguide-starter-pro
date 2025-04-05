@@ -1,145 +1,111 @@
 [![CodeGuide](/codeguide-backdrop.svg)](https://codeguide.dev)
 
 
-# CodeGuide Starter Pro
+# Seoptimizer - Internal SEO Tool
 
-A modern web application starter template built with Next.js 14, featuring authentication, database integration, and payment processing capabilities.
-
-## Tech Stack
-
-- **Framework:** [Next.js 14](https://nextjs.org/) (App Router)
-- **Authentication:** [Clerk](https://clerk.com/)
-- **Database:** [Supabase](https://supabase.com/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Payments:** [Stripe](https://stripe.com/)
-- **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
-
-## Prerequisites
-
-Before you begin, ensure you have the following:
-- Node.js 18+ installed
-- A [Clerk](https://clerk.com/) account for authentication
-- A [Supabase](https://supabase.com/) account for database
-- A [Stripe](https://stripe.com/) account for payments (optional)
-- Generated project documents from [CodeGuide](https://codeguide.dev/) for best development experience
-
-## Getting Started
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd codeguide-starter-pro
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   yarn install
-   # or
-   pnpm install
-   ```
-
-3. **Environment Variables Setup**
-   - Copy the `.env.example` file to `.env`:
-     ```bash
-     cp .env.example .env
-     ```
-   - Fill in the environment variables in `.env` (see Configuration section below)
-
-4. **Start the development server**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-   ```
-
-5. **Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.**
-
-## Configuration
-
-### Clerk Setup
-1. Go to [Clerk Dashboard](https://dashboard.clerk.com/)
-2. Create a new application
-3. Go to API Keys
-4. Copy the `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`
-
-### Supabase Setup
-1. Go to [Supabase Dashboard](https://app.supabase.com/)
-2. Create a new project
-3. Go to Project Settings > API
-4. Copy the `Project URL` as `NEXT_PUBLIC_SUPABASE_URL`
-5. Copy the `anon` public key as `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-
-### Stripe Setup (Optional)
-1. Go to [Stripe Dashboard](https://dashboard.stripe.com/)
-2. Get your API keys from the Developers section
-3. Add the required keys to your `.env` file
-
-## Environment Variables
-
-Create a `.env` file in the root directory with the following variables:
-
-```env
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key
-CLERK_SECRET_KEY=your_secret_key
-
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# Stripe (Optional)
-STRIPE_SECRET_KEY=your_stripe_secret_key
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-```
+Seoptimizer is an internal web-based tool designed for SEO agencies to streamline client work management and task execution. It features a powerful SEO Writing Tool that guides content creation through step-by-step reasoning and competitor analysis.
 
 ## Features
 
-- 🔐 Authentication with Clerk
-- 📦 Supabase Database
-- 💳 Stripe Payments Integration
-- 🎨 Modern UI with Tailwind CSS
-- 🚀 App Router Ready
-- 🔄 Real-time Updates
-- 📱 Responsive Design
+- **SEO Writing Tool:** Craft high-quality, SEO-optimized content through a guided multi-step process:
+  - Keyword analysis with YourText.guru integration
+  - Content structure generation
+  - AI-powered content creation
+  - Semantic analysis and competitor benchmarking
+
+- **Role-Based Access Control:**
+  - Internal team dashboard with full access to all features
+  - Client interface with curated reports and comment functionality
+
+- **Task Management:**
+  - Manage articles, backlinks, and technical SEO tasks
+  - Track progress and deadlines for each client
+
+- **AI Model Integration:**
+  - Supports multiple AI models (Claude 3.5 Sonnet, GPT-4, Gemini 2.5 Pro)
+  - Custom model selection for different content types
+
+## Tech Stack
+
+- **Frontend:** Next.js 14, TypeScript, Tailwind CSS, Shadcn UI
+- **Backend:** Supabase/Postgres, Clerk Auth
+- **DevOps:** Docker, GitHub Actions
+- **AI & Integrations:** OpenAI, Claude, Gemini, YourText.guru
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v20.x or higher)
+- Python 3.x (for headless browser automation)
+- Supabase account
+- Clerk Auth account
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/seoptimizer.git
+   cd seoptimizer
+   ```
+
+2. Install dependencies:
+   ```
+   npm install
+   ```
+
+3. Set up environment variables:
+   ```
+   cp .env.example .env.local
+   ```
+   
+   Update the `.env.local` file with your own credentials for:
+   - Clerk Auth
+   - Supabase
+   - AI model APIs (if applicable)
+
+4. Run the development server:
+   ```
+   npm run dev
+   ```
+
+5. Visit `http://localhost:3000` to see the application.
 
 ## Project Structure
 
-```
-codeguide-starter/
-├── app/                # Next.js app router pages
-├── components/         # React components
-├── utils/             # Utility functions
-├── public/            # Static assets
-├── styles/            # Global styles
-├── documentation/     # Generated documentation from CodeGuide
-└── supabase/          # Supabase configurations and migrations
-```
+- `/app`: Next.js 14 App Router pages and API routes
+- `/components`: Reusable UI components
+- `/services`: API client services for data fetching
+- `/lib`: Utility functions and database types
+- `/supabase`: Supabase migration files
+- `/public`: Static assets
 
-## Documentation Setup
+## Development Workflow
 
-To implement the generated documentation from CodeGuide:
+### Database Migrations
 
-1. Create a `documentation` folder in the root directory:
-   ```bash
-   mkdir documentation
-   ```
+Migrations are stored in the `/supabase/migrations` directory. When you make changes to the database schema, create a new migration file with a timestamp.
 
-2. Place all generated markdown files from CodeGuide in this directory:
-   ```bash
-   # Example structure
-   documentation/
-   ├── project_requirements_document.md             
-   ├── app_flow_document.md
-   ├── frontend_guideline_document.md
-   └── backend_structure_document.md
-   ```
+### Adding New Features
 
-3. These documentation files will be automatically tracked by git and can be used as a reference for your project's features and implementation details.
+1. Create the appropriate UI components in `/components`
+2. Add API routes in `/app/api`
+3. Create service functions in `/services`
+4. Implement the frontend pages in `/app`
+
+## Deployment
+
+The application is configured to be deployed on a Hostinger VPS with the following specs:
+- 2 vCPUs
+- 8GB RAM
+- 100GB NVMe storage
+
+Deployment is handled via GitHub Actions with Docker for containerization.
+
+## License
+
+[Your License Here]
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+[Contribution Guidelines]

@@ -10,6 +10,11 @@ const config: Config = {
 	theme: {
 		extend: {
 			colors: {
+				seoptimizer: {
+					primary: "#E94E19",
+					secondary: "#F39200",
+					dark: "#1D2B4C"
+				},
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {

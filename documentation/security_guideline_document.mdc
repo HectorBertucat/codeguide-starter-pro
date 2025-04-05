@@ -1,0 +1,140 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+# Seoptimizer Security Guideline Document
+
+This document outlines the security principles, practices, and requirements for Seoptimizer, an internal web-based SEO tool. It is intended for internal developers and security teams to ensure that secure coding practices are applied consistently throughout the application development lifecycle.
+
+## 1. Security by Design
+
+*   **Embed Security Early:** Security measures must be integrated at every stage, from design and implementation to testing and deployment.
+*   **Architecture Decisions:** Ensure the backend (Supabase/Postgres) and frontend (Next.js 14 with TS, Tailwind CSS) components are designed with layered security controls.
+
+## 2. Least Privilege & Role Based Access Control (RBAC)
+
+*   **User Roles:**
+
+    *   **Internal Team:** Full privileges, including content generation, user management, and technical manipulations.
+    *   **Clients:** Read-only access with comment functionality on curated monthly reports.
+
+*   **Access Checks:** Always enforce robust server-side authorization.
+
+*   **Minimal Permissions:** Each service/component is granted only the permissions needed to perform its function.
+
+## 3. Defense in Depth
+
+*   **Multiple Layers:** Combine network, application, and physical security controls.
+*   **API Endpoints:** Ensure endpoints are protected with rate limiting, proper authentication, and input sanitization to mitigate the risk of DoS or brute-force attacks.
+
+## 4. Input Validation & Output Encoding
+
+*   **Sanitization:** Validate and sanitize *all* external input. Consider every user input as untrusted.
+*   **Injection Attacks Prevention:** Use parameterized queries and reputable ORMs (e.g., Supabase client) to prevent SQL/NoSQL injections.
+*   **HTML/JS Encoding:** Use context-aware output encoding to avoid XSS.
+
+## 5. Fail Securely
+
+*   **Error Handling:** Ensure that error messages do not reveal sensitive information. Use generic error messages for client-side feedback.
+*   **Logging:** Log errors securely server-side with sensitive details redacted.
+
+## 6. Secure Session & Cookie Management
+
+*   **Session IDs:** Generate unpredictable session identifiers and enforce session timeouts (idle and absolute).
+*   **Secure Cookies:** Mark cookies as `HttpOnly`, `Secure`, and set `SameSite` appropriately.
+*   **Clerk Auth:** Use the Clerk authentication service for robust user session management, ensuring that both internal team authentication and client logins are secure.
+
+## 7. Data Protection & Privacy
+
+*   **Data Encryption: **
+
+    *   **At-Rest:** Encrypt sensitive data stored in Supabase/Postgres using industry standard algorithms (e.g., AES-256).
+    *   **In-Transit:** Encrypt API communications using TLS 1.2+.
+
+*   **Secrets Management:** Avoid hardcoding API keys and credentials. Use environment variables and secure vaults where possible.
+
+## 8. API & Service Security
+
+*   **HTTPS Everywhere:** Enforce TLS on all API endpoints and external service communications (e.g., YourText.guru integration).
+*   **Rate Limiting:** Implement rate limiting on APIs to reduce the risk of abuse and DOS attacks.
+*   **CORS Controls:** Properly set CORS headers to allow only trusted origins.
+*   **Versioning:** Create versioned API endpoints to ensure backward compatibility and secure deprecation of older endpoints.
+
+## 9. Web Application Security Hygiene
+
+*   **CSRF Protection:** Use anti-CSRF tokens (synchronizer token pattern) on state-changing operations.
+
+*   **Security Headers:** Set security headers such as:
+
+    *   `Content-Security-Policy`
+    *   `Strict-Transport-Security`
+    *   `X-Content-Type-Options`
+    *   `X-Frame-Options`
+    *   `Referrer-Policy`
+
+*   **Clickjacking:** Prevent clickjacking by using the appropriate security headers and CSP frame-ancestors.
+
+## 10. Infrastructure Security & Configuration Management
+
+*   **Secure Hosting:**
+
+    *   The tool is deployed on a Hostinger VPS. Harden the operating system and services running on the VPS.
+    *   Ensure only the necessary network ports are open and unnecessary services are disabled.
+
+*   **TLS/SSL:** Enforce secure communication channels and disable weak protocols.
+
+*   **Environment Hardening:** Enforce secure permissions and minimize possible attack surface in production environments.
+
+## 11. Dependency and Third-Party Library Management
+
+*   **Vetted Dependencies:** Use only reputable and actively maintained libraries (e.g., Next.js, Tailwind CSS, Supabase client) to minimize vulnerabilities.
+*   **Regular Updates:** Keep all dependencies updated using tools like GitHub Dependabot and lockfiles (`package-lock.json` or equivalent) to ensure consistency.
+*   **Vulnerability Scanning:** Integrate Software Composition Analysis (SCA) tools to detect known vulnerabilities.
+
+## 12. Specific Considerations for External Integrations
+
+### YourText.guru Integration:
+
+*   **Headless Browser Automation:**
+
+    *   Automate the login and cookie management process securely using a headless browser.
+    *   Encrypt stored credentials and cookies, ensuring that communication happens only over secure channels.
+
+*   **Data Handling:**
+
+    *   Fetch and store SEO data (n-grams, SEO scores) securely.
+    *   Validate and sanitize data exchanges to prevent injection attacks during semantic analysis submissions.
+
+### AI Model Integration:
+
+*   **Model Selection:**
+
+    *   Predefined approaches (e.g., Claude 3.5 Sonnet, GPT-4, Gemini 2.5 Pro) are automatically selected based on tasks.
+    *   Provide manual override options using a configuration table that is easy to manage and secure.
+
+*   **Logging and Auditing:**
+
+    *   Log model choices and interactions for later auditing and optimization, ensuring any anomaly in model outputs is traceable back for security review.
+
+## 13. CI/CD & DevOps Security
+
+*   **GitHub Actions:** Secure pipelines by integrating security checks (linting, SAST, dependency scanning) in GitHub Actions.
+*   **Container Security:** Use Docker with best practices such as running non-root containers and minimizing image size/surface.
+*   **Deployment Checks:** Prior to deployment to production, verify that all debug features and verbose error logging have been disabled.
+
+## 14. Monitoring & Incident Response
+
+*   **Audit Logs:** Keep comprehensive logs for API calls, login attempts, and sensitive operations.
+*   **Real-Time Monitoring:** Implement monitoring to detect unusual activities (e.g. repeated authentication failures, unusual API usage) and trigger alerts.
+*   **Incident Response Plan:** Maintain an incident response plan for rapid action in case a security breach occurs. Ensure communication protocols and remediation procedures are in place.
+
+## 15. Conclusion
+
+Implementing these security guidelines is critical to protecting Seoptimizer and its sensitive data. By adhering to these practices, the tool will achieve a robust security posture through a combination of strict authentication, layered defenses, rigorous input validation, and secure integration with third-party services.
+
+All team members must follow these guidelines during development, deployment, and maintenance. Regular audits and updates to the security strategy should be conducted to adapt to new threats and ensure compliance with best practices.
+
+*End of Security Guideline Document*

@@ -1,0 +1,47 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+flowchart TD
+
+    A[Landing Page - Option Sign-In/Sign-Up] --> B[Authentication Flow]
+    B --> C{User Role?}
+    C -->|Internal| D[Internal Dashboard]
+    C -->|Client| E[Client Interface]
+
+    D --> F[Main Dashboard with Sidebar and Header]
+    F --> G[Manage Projects and SEO Tasks]
+    G --> H[Access SEO Writing Tool]
+    H --> I[Keyword Selection]
+    I --> J[Headless Browser - YourText.guru Login and Data Fetch]
+    J --> K[Competitor Analysis with Firecrawl]
+    K --> L[Supplement Data Input]
+    L --> M[Auto-Generate Editable Content Structure]
+    M --> N[Segmented Content Generation]
+    N --> O[Semantic Analysis via YourText.guru]
+    O --> P[Review and AI-Powered Edits]
+    P --> Q[Final Article Submission and Markdown Storage]
+
+    E --> R[View Curated Monthly Report]
+    R --> S[Add Comments on Specific Tasks]
+    R --> T[Access Historical Reports]
+
+    F --> U[Access User Management Panel]
+    U --> V[Manage Users and Permissions]
+
+    Q --> W[Robust API Endpoints]
+    W --> X[Supabase and Postgres Storage]
+
+    X --> Y[Integration with AI Models]
+    Y --> Z[Predefined Model Selection]
+    Z --> AA[Optional Manual Model Override]
+
+    P --> AB[Real-Time SEO Score and SVG Graph]
+    AB --> AC[Display SEO and DSEO Scores with Competitor Benchmarks]
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
+    style E fill:#bfb,stroke:#333,stroke-width:2px

@@ -1,0 +1,133 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+# Seoptimizer Frontend Guideline Document
+
+This document outlines the frontend architecture, design principles, and technologies used for the Seoptimizer project. The goal is to provide a clear overview of the frontend setup, ensuring ease of understanding for all team members, regardless of technical background.
+
+## 1. Frontend Architecture
+
+The Seoptimizer frontend is built with a modern, component-based architecture that uses Next.js 14 coupled with TypeScript. This combination provides a robust foundation with built-in routing, server-side rendering, and static site generation, which are important for scalability and performance.
+
+Key aspects of our architecture:
+
+*   **Framework & Language:** Next.js 14 with TypeScript ensures type safety, clean code, and easier debugging.
+*   **Component Library:** Shadcn UI components are used to speed up development and ensure consistency across the application.
+*   **Scalability & Maintainability:** The application is structured in a component-driven way where individual UI elements and modules can be developed, tested, and maintained independently. This structure also supports efficient collaboration within the team.
+*   **Performance:** Leveraging Next.js’s built-in performance features like code splitting and server-side rendering, combined with lazy loading of components, the frontend is optimized for quick load times and a smooth user experience.
+
+## 2. Design Principles
+
+The Seoptimizer frontend adheres to several key design principles:
+
+*   **Usability:** User interfaces are designed to be intuitive and easy to navigate. Features like the SEO Writing Tool and dashboards are user-friendly, reducing the learning curve for both internal teams and clients.
+*   **Accessibility:** We follow web accessibility standards (WCAG) ensuring that content is accessible to all users. This includes proper semantic HTML, ARIA attributes, and keyboard navigation support.
+*   **Responsiveness:** The design adapts seamlessly across devices from desktops to tablets and mobile phones, ensuring a consistent experience regardless of screen size.
+*   **Consistency:** By standardizing components and employing a unified design system (with Shadcn UI and Tailwind CSS), the UI remains consistent throughout the application. This reduces cognitive load for users and aids in brand recognition.
+
+These principles guide our design decisions, ensuring that despite the complexity behind features like AI-assisted writing and multilingual support, the end-user experience remains straightforward.
+
+## 3. Styling and Theming
+
+Our styling approach is modern and clean, ensuring both aesthetics and functionality:
+
+*   **CSS Methodologies & Tools:**
+
+    *   We use Tailwind CSS to rapidly apply styles directly in our components which promotes consistency and efficiency. Utility classes help enforce design consistency with minimal overhead.
+    *   While Tailwind provides the core styling framework, custom styles are managed in accordance with a component-based structure.
+
+*   **Pre-Processors & Frameworks:**
+
+    *   Tailwind CSS acts as our main CSS framework. No additional pre-processors are needed, though our configuration allows for easy extensibility if needed.
+
+*   **Theming & Style:**
+
+    *   The look and feel of the application follow a modern, flat design with material elements integrated through Shadcn UI components.
+    *   The overall style is characterized by clean layouts, ample use of white space, and subtle shadows to create a sense of depth. Although not fully embracing glassmorphism, the design subtly incorporates modern interface techniques that appeal to today's users.
+
+*   **Color Palette:**
+
+    *   Primary: #1A73E8 (a strong, user-friendly blue)
+    *   Secondary: #4285F4 (complementary lighter blue)
+    *   Accent: #34A853 (green, used for positive actions and success indicators)
+    *   Neutral: #F1F3F4 (light gray for backgrounds), #202124 (dark gray for text)
+    *   Warning/Error: #EA4335 (red for errors and alerts)
+
+*   **Fonts:**
+
+    *   The app uses a modern sans-serif font such as 'Inter' for optimal readability and a clean aesthetic, combined with system fonts as fallbacks.
+
+## 4. Component Structure
+
+The front end utilizes a component-based structure where each UI element is encapsulated as a reusable component. This helps in:
+
+*   **Reusability:** Components are designed to be self-contained, allowing them to be reused across different parts of the application. For example, common elements like buttons, input fields, and modal dialogs are standardized.
+*   **Organization:** Components are organized into directories based on their usage (e.g., dashboard components, SEO writing tool components, authentication-related components).
+*   **Maintainability:** A clear separation of concerns ensures that UI logic and presentation are maintained in distinct components, making it easier to track changes and debug issues.
+
+This structure is important for future scalability and ensures that as new features (like additional AI model integration) are added, they can plug into the existing framework seamlessly.
+
+## 5. State Management
+
+Managing the state efficiently is crucial to ensure the application remains responsive and user-friendly:
+
+*   **Approach:** We use a combination of local component state and a global state management solution when necessary. For smaller, isolated UI elements, React's built-in useState and useEffect are sufficient.
+
+*   **Libraries/Patterns:**
+
+    *   For more complex state sharing, especially around authentication, user role permissions, and dynamic data from API calls, we leverage the built-in capabilities of Next.js with its server-side data fetching alongside React Context API. This provides a simple yet effective solution without additional library overhead.
+
+*   **Smooth User Experience:** This approach ensures that state changes propagate effectively across components, resulting in a fluid and responsive user experience.
+
+## 6. Routing and Navigation
+
+Routing in Seoptimizer is handled using Next.js’s built-in routing system:
+
+*   **Next.js Router:** Routes are defined in the file-system based structure, making it straightforward to add, update, or remove pages.
+
+*   **Navigation Structure:**
+
+    *   **Internal Team Dashboard:** Provides navigation across client overviews, progress tracking, and task management.
+    *   **Client Interface:** Offers simplified navigation for viewing previous reports and adding comments to tasks.
+    *   **SEO Writing Tool:** A step-by-step guided interface, where users move seamlessly between keyword analysis, content structure generation, and iterative optimization.
+
+By using a combination of Next.js's dynamic routing and nested routes configuration, navigating between the different roles and features remains intuitive and robust.
+
+## 7. Performance Optimization
+
+Optimizing the frontend for performance is fundamental to ensuring a smooth, quick user experience:
+
+*   **Lazy Loading & Code Splitting:** Components not immediately needed at page load are loaded on-demand, reducing initial load times.
+*   **Asset Optimization:** Images, icons, and other static assets are optimized and served appropriately. Tailwind CSS’s purging mechanism eliminates unused classes to keep the CSS bundle lean.
+*   **Server-Side Rendering (SSR):** Leveraging Next.js’s SSR and static generation improves content delivery speed and SEO performance.
+*   **Caching Strategies:** Implement browser caching for static assets and efficient state management to reduce redundant API calls.
+
+These measures collectively contribute to a performance-focused frontend environment, ensuring every user interaction is smooth and responsive.
+
+## 8. Testing and Quality Assurance
+
+To ensure code quality and application stability, robust testing strategies are implemented:
+
+*   **Unit Testing:** Each component is tested individually using Jest and React Testing Library. Unit tests ensure that each component behaves as expected in isolation.
+*   **Integration Testing:** Integration tests confirm that different components work together as designed, particularly for critical flows such as authentication and the SEO Writing Tool functions.
+*   **End-to-End Testing:** Tools like Cypress are used to simulate real user interactions across the application, from dashboard navigation to executing key actions in the writing tool.
+*   **Continuous Integration (CI):** GitHub Actions is set up to run tests automatically on every pull request or commit, ensuring that issues are caught early in the development process.
+
+This comprehensive suite of tests helps maintain high code quality and reliability throughout the lifecycle of the project.
+
+## 9. Conclusion and Overall Frontend Summary
+
+The Seoptimizer frontend is designed to be robust, scalable, and maintainable. Key takeaways include:
+
+*   A modern architecture based on Next.js and TypeScript ensures a high-quality, performant application that supports server-side rendering and dynamic routing while being very developer-friendly.
+*   Design principles focusing on usability, accessibility, and responsiveness guide the interface to ensure that both internal team members and clients have a satisfying experience.
+*   A component-based structure, combined with a thoughtful state management solution, facilitates ease of maintenance and the smooth addition of new features such as enhanced AI model integration and multilingual support.
+*   Performance optimizations and diligent testing practices guarantee a fast, reliable, and secure user interface.
+
+This integrated approach helps differentiate Seoptimizer by not only meeting but exceeding the expectations for an internal SEO tool. It is designed to streamline tasks, automate content creation, and ultimately enhance the workflow of an SEO agency in a secure and efficient manner.
+
+By adhering to these frontend guidelines, our team is well-equipped to deliver a high-quality user experience that aligns perfectly with the project's goals and the needs of our users.

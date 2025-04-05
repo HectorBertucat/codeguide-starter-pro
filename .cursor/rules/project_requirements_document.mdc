@@ -1,0 +1,192 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+# Project Requirements Document – Seoptimizer
+
+## 1. Project Overview
+
+Seoptimizer is an internal web-based tool designed for an SEO agency to streamline client work management and task execution. At its heart, the tool is an SEO Writing Tool that guides users through creating perfect articles with step-by-step reasoning, competitor analysis, and semantic data evaluation. The application is built to automate the creative process as much as possible while still allowing manual adjustments to ensure that both style and technical SEO criteria are met. Users will benefit from a seamless interface that integrates advanced AI models and external services like YourText.guru to guarantee that every piece of content is optimized from the ground up.
+
+This tool is being built to simplify the management of client assignments and to centralize the SEO content creation workflow. By offering two distinct interfaces—one dedicated to the internal team with full control over task creation and editing, and another for clients providing curated reports and the ability to comment—the application ensures data confidentiality and functionality segregation. Key success criteria include seamless integration with third-party services, robust AI-driven content generation, and a modern yet highly functional UI that supports both English and French content creation.
+
+## 2. In-Scope vs. Out-of-Scope
+
+**In-Scope:**
+
+*   Development of an internal dashboard for the agency with complete access for internal team members.
+
+*   Separate client interface that displays curated monthly reports and allows for task-specific commenting.
+
+*   A guided SEO Writing Tool that:
+
+    *   Initiates with keyword data fetching (search intention, n-grams, and semantic entities) through YourText.guru.
+    *   Conducts competitor analysis by scraping the top five SERP results.
+    *   Generates a detailed and editable content structure including headings, bullet points, and tables.
+    *   Sequentially generates article segments and performs semantic analysis by fetching SEO and DSEO scores as well as competitor benchmarks.
+    *   Provides real-time editing capabilities using AI-powered commands for text adjustments.
+
+*   Role-based access control ensuring internal users have full privileges and clients have limited, view/comment only access.
+
+*   Robust API endpoints built on Supabase/Postgres ensuring content is stored in markdown (hidden from user view) and integrated with a secure markdown editor.
+
+*   Integration with multiple AI models (e.g., Claude 3.5 Sonnet, GPT-4, Gemini 2.5 Pro) with options for predefined or manual selection.
+
+*   Automated handling of YourText.guru integration that manages headless browser login, cookie management, and semantic analysis.
+
+**Out-of-Scope:**
+
+*   Advanced database management tools beyond basic API endpoints (e.g., detailed export/import functions).
+*   External integrations other than YourText.guru, Perplexity, and the listed AI models.
+*   Extensive client interactive functionalities beyond viewing pre-selected reports and leaving comments.
+*   Overly advanced design customizations; while a modern, clean UI is expected, deep branding integrations (beyond the stated accent color guidelines) will be considered for later phases.
+*   API integrations with external platforms like Airtable (future possibility but not included in this initial phase).
+
+## 3. User Flow
+
+For an internal team member, the journey begins by logging into Seoptimizer where they are taken to a comprehensive dashboard that serves as the control center. Here, the user sees an overview of client projects and SEO tasks including article generation, backlink management, and technical actions. They can navigate through a sidebar to manage users, view detailed reports, and perform administrative actions. When initiating the SEO Writing Tool, the user selects a keyword, triggers data fetching from YourText.guru, and runs competitor analysis using Firecrawl; then, they follow a guided, multi-step process to create, review, and optimize content while real-time SEO suggestions and metrics are provided.
+
+Conversely, when a client logs in, they are greeted with a streamlined interface that displays a carefully curated snapshot of their monthly report. The client interface limits user actions to viewing past reports and adding comments on specific tasks. All the in-depth details and editing capabilities remain internal. This ensures that the client sees only what the internal team chooses to expose, keeping complex operational tasks hidden while still providing enough information to demonstrate value and progress.
+
+## 4. Core Features
+
+*   **Authentication and Role-Based Access Control:**
+
+    *   Secure login using Clerk Auth.
+    *   Internal team with full access; clients are granted view-only access with comment capabilities on specific tasks.
+
+*   **Internal Dashboard for Team Members:**
+
+    *   Central hub to track client projects, view detailed SEO tasks (including article generation, backlink specifics, and technical actions).
+    *   Administrative panel for managing user accounts and permissions.
+
+*   **Client Interface:**
+
+    *   Curated, read-only view of monthly reports.
+    *   Ability for clients to log in, view historical data, and add comments on tasks without modifying core data.
+
+*   **Guided SEO Writing Tool:**
+
+    *   Initiates with keyword selection and fetches relevant SEO data (search intention, n-grams, semantic entities via YourText.guru).
+    *   Conducts competitor analysis by scraping key info from the top five SERP results (content length, page type, search intention).
+    *   Generates and presents a detailed editable content structure (with headings, subheadings, bullet points, tables, etc.).
+    *   Sequential content generation where each segment considers previous content and SEO guidelines.
+    *   Multilingual support (English and French) with optimized, translatable prompts.
+    *   Real-time editing with AI-powered quick actions (shorten, expand, format adjustments).
+
+*   **Integrated Semantic Analysis:**
+
+    *   Post-generation analysis using YourText.guru to obtain SEO score, DSEO score, competitor benchmarks, and generate an SVG graph.
+    *   Use of data from semantic analysis to suggest or automatically apply content enhancements.
+
+*   **Flexible AI Model Selection:**
+
+    *   Automatic assignment of a predefined AI model for each task.
+    *   Option for users to switch models manually from a dynamically managed configuration table.
+    *   Support for models such as Claude 3.5 Sonnet, GPT-4, Gemini 2.5 Pro.
+
+*   **Robust API Endpoints and Markdown Content Storage:**
+
+    *   Backend API built on Supabase/Postgres for secure data transactions.
+    *   Content stored in markdown format; users interact with an enhanced markdown editor with SEO optimization functions.
+    *   Cookie management and headless browser integration for YourText.guru interactions.
+
+## 5. Tech Stack & Tools
+
+*   **Frontend:**
+
+    *   Next.js 14 with TypeScript for a scalable and modern web framework.
+    *   Tailwind CSS along with Shadcn for streamlined, component-based UI development.
+
+*   **Backend & Storage:**
+
+    *   Supabase for backend and Postgres for robust data storage.
+    *   Clerk Auth for handling secure authentication and user management.
+
+*   **DevOps & Hosting:**
+
+    *   GitHub Actions to manage CI/CD processes.
+    *   Docker for local development environment consistency.
+    *   Deployment on Hostinger VPS using 2 vCPU cores, 8GB RAM, and 100GB NVMe storage.
+
+*   **AI Models & Libraries:**
+
+    *   Integration with advanced AI models: Claude 3.5 Sonnet, GPT-4, and Gemini 2.5 Pro.
+    *   Use of Perplexity for gathering web data and Firecrawl for SERP scraping.
+    *   Browser automation for YourText.guru using a headless browser setup.
+
+*   **IDE & Plugin Integrations:**
+
+    *   Cursor for advanced AI-powered coding assistance.
+    *   Support and guidelines for IDE setup might include integrations similar to Cursor, ensuring real-time suggestions while coding.
+
+## 6. Non-Functional Requirements
+
+*   **Performance:**
+
+    *   The app should load and respond within a few seconds even when processing real-time data from multiple APIs.
+    *   Real-time content updates and analysis feedback must be fast to keep human-in-loop editing efficient.
+
+*   **Security:**
+
+    *   Secure user authentication, session management, and role-based access.
+    *   Robust API endpoints with proper rate limiting and data validation.
+    *   Secure handling of cookies and stored credentials for external integrations (e.g., YourText.guru).
+
+*   **Compliance & Usability:**
+
+    *   Data storage and processing should comply with privacy standards suitable for client-sensitive SEO data.
+    *   UI should be intuitive, offering both functional clarity and a modern aesthetic.
+    *   Accessibility considerations to support multi-language (English and French) content.
+
+*   **Scalability:**
+
+    *   The system architecture must support adding new AI models and integrating additional third-party APIs with minimal configuration changes.
+    *   API endpoints should be designed to handle future increases in data load and user interactions.
+
+## 7. Constraints & Assumptions
+
+*   **Constraints:**
+
+    *   Dependence on headless browser automation for YourText.guru as actual API access is not available.
+    *   System resources (VPS with specified vCPU, RAM, and storage limits) must be managed to handle simultaneous user sessions and multiple API calls.
+    *   Real-time operations (e.g., SEO scoring and competitor analysis) might be affected by API rate limits or connectivity issues.
+
+*   **Assumptions:**
+
+    *   Internal team users will only require full access while client users have restricted actions such as commenting.
+    *   AI models will be pre-configured with defaults based on task type but will provide flexibility for manual selection by advanced users.
+    *   The content generation flow — from keyword selection to semantic analysis — will be executed sequentially, with each step’s data available for review and editing before proceeding.
+    *   The deployment and CI/CD pipelines using GitHub Actions and Docker will be maintained and updated as the project scales.
+
+## 8. Known Issues & Potential Pitfalls
+
+*   **API Rate Limits and External Dependencies:**
+
+    *   Heavy reliance on YourText.guru’s headless browser interactions might result in rate limits or session timeouts.
+    *   Mitigation: Implement caching strategies for repeated requests and robust error handling to manage re-logins and cookie refreshes automatically.
+
+*   **Data Consistency & Real-Time Updates:**
+
+    *   Ensuring that content stored in markdown remains consistent with the processed, user-facing version might introduce discrepancies.
+    *   Mitigation: Use strict API validations and transformation layers that convert raw markdown to a user-friendly format without exposing raw code.
+
+*   **AI Model Integration and Flexibility:**
+
+    *   Automatically selecting an AI model versus allowing manual overrides might lead to unexpected outputs if the wrong model is used for a particular task.
+    *   Mitigation: Provide clear guidelines and fallback options within the configuration table, and include logging to track model choices for further improvements.
+
+*   **User Experience in Multilingual Contexts:**
+
+    *   Implementing prompt translations and ensuring quality output in both English and French may introduce complexity.
+    *   Mitigation: Build translation workflows into the content creation process and allow users to preview translated prompts/devices before finalizing content.
+
+*   **Security of External Automation:**
+
+    *   Automating login and cookie management for YourText.guru could expose vulnerabilities if not handled properly.
+    *   Mitigation: Encrypt stored credentials and cookies and ensure that all communications using the headless browser are done over secure channels.
+
+This document should serve as the single point of truth for Seoptimizer development. It details the project’s concept, user journeys, core features, tech stack, non-functional requirements, and potential challenges. Every subsequent technical document (Tech Stack Document, Frontend Guidelines, Backend Structure, etc.) will derive from and reference this PRD to ensure that the system is built exactly as envisioned with no ambiguity.

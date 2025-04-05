@@ -1,0 +1,202 @@
+---
+description: Apply these rules when making changes to the project
+globs:
+alwaysApply: true
+---
+
+Update this rule if user requested changes to the project requirement, etc.
+## Project Overview
+
+*   **Type:** cursor_project_rules
+*   **Description:** I am developing an internal web-based tool called Seoptimizer for my SEO agency to streamline the management of client work and task execution. This tool is an SEO Writing Tool designed to craft perfect articles through step-by-step reasoning and competitor analysis while managing various client tasks such as article writing, technical actions, and backlinks. It integrates YourText.guru for semantic analysis to determine optimal keywords and evaluate SEO scores, and provides distinct interfaces for internal team use and client reporting.
+*   **Primary Goal:** Automate SEO content creation and client task management by integrating advanced AI models (e.g., Claude 3.5 Sonnet, GPT-4, Gemini 2.5 Pro) with external services like YourText.guru, ensuring streamlined workflows, detailed reporting, and robust role-based access control.
+
+## Project Structure
+
+### Framework-Specific Routing
+
+*   **Directory Rules:**
+
+    *   **[next.js 14]:** Use the App Router with a nested directory structure. For instance, routes follow the `app/[route]/page.tsx` convention.
+    *   Example 1: "Next.js 14 (App Router)" → `app/[route]/page.tsx` conventions
+    *   Example 2: "Next.js (Pages Router)" → `pages/[route].tsx` pattern (not applicable in this project)
+    *   Example 3: "React Router 6" → `src/routes/` with `createBrowserRouter` (if incorporated for client-specific flows)
+
+### Core Directories
+
+*   **Versioned Structure:**
+
+    *   **[app]:** Houses Next.js 14 API routes, pages, and nested route directories. For example:
+
+        *   `app/api` → Next.js 14 API routes using Route Handlers
+        *   `app/page.tsx` → Main landing page
+
+    *   Example 1: `app/api` is used for serverless functions and webhook integrations
+
+    *   Example 2: `src/views` could be adopted for non-Next.js frameworks such as Vue 3 if needed
+
+### Key Files
+
+*   **Stack-Versioned Patterns:**
+
+    *   **[file]:** Critical files should follow version-specific structures. For example:
+
+        *   `app/dashboard/layout.tsx` → Next.js 14 root layout for the internal dashboard
+        *   `pages/_app.js` → Would be used in a Pages Router project (not applicable here)
+
+## Tech Stack Rules
+
+*   **Version Enforcement:**
+
+    *   **[next@14]:** App Router is required; usage of `getInitialProps` is disallowed.
+    *   Example: "next@14": "App Router required, no `getInitialProps`"
+
+## PRD Compliance
+
+*   **Non-Negotiable:**
+
+    *   "Seoptimizer is an internal web-based tool designed for SEO agencies that streamlines client management and SEO content creation by integrating advanced AI models and external semantic analysis (YourText.guru) with rigorous role-based access control." This mandates two distinct interfaces: an internal dashboard with full access and a client interface with view-only and comment capabilities, as well as a guided, multi-step SEO writing process.
+
+## App Flow Integration
+
+*   **Stack-Aligned Flow:**
+
+    *   Example: "Next.js 14 Auth Flow → `app/auth/login/page.tsx` uses server actions for secure login and session management."
+    *   Actual flows include distinct onboarding, dashboard, and SEO writing tool workflows that align with internal user versus client pathways.
+
+## Best Practices
+
+*   **[next.js 14]**
+
+    *   Use file-based routing with the `app/` directory exclusively.
+    *   Organize routes into nested folders to maintain clear separation between public, API, and protected areas.
+    *   Leverage server actions for secure authentication and data fetching.
+
+*   **[typescript]**
+
+    *   Enforce strict typing and avoid using `any`.
+    *   Utilize interfaces and types for component props and API responses.
+    *   Integrate linting and formatting tools.
+
+*   **[tailwind css]**
+
+    *   Use utility-first classes to ensure concise and responsive design.
+    *   Keep custom styling minimal and centralized.
+    *   Enable purge in production to optimize bundle size.
+
+*   **[shadcn]**
+
+    *   Utilize the Shadcn component library for cohesive UI building blocks.
+    *   Ensure components are responsive and accessible.
+    *   Follow documentation for integration with Tailwind CSS.
+
+*   **[supabase]**
+
+    *   Secure API keys and use environment variables.
+    *   Leverage row-level security (RLS) for data protection.
+    *   Optimize database queries for performance.
+
+*   **[postgres]**
+
+    *   Normalize and index schema designs for efficient querying.
+    *   Use migrations for smooth schema updates.
+    *   Regularly backup data and monitor performance.
+
+*   **[authentication]**
+
+    *   Implement Clerk Auth ensuring robust session management.
+    *   Apply role-based access control meticulously.
+    *   Validate all user inputs for security.
+
+*   **[storage]**
+
+    *   Store content in markdown behind a user-friendly editor interface.
+    *   Abstract storage logic to decouple from presentation layers.
+    *   Cache frequently accessed content for performance.
+
+*   **[python]**
+
+    *   Follow PEP8 standards for readability and maintainability.
+    *   Use virtual environments and dependency management.
+    *   Write comprehensive tests for critical modules.
+
+*   **[github actions]**
+
+    *   Define clear build, test, and deployment workflows.
+    *   Securely manage secrets and deployment keys.
+    *   Automate linting, testing, and integration checks.
+
+*   **[docker]**
+
+    *   Employ multi-stage builds to optimize image size.
+    *   Isolate build and runtime environments.
+    *   Use lightweight base images.
+
+*   **[hostinger vps]**
+
+    *   Monitor system resource usage (vCPU, RAM, NVMe storage).
+    *   Apply strict security (SSH keys, firewalls) and update regularly.
+    *   Optimize configurations for scalability.
+
+*   **[yourtext.guru]**
+
+    *   Automate headless browser interactions securely.
+    *   Cache cookies to minimize frequent logins.
+    *   Implement robust error handling for authentication and data fetching.
+
+*   **[claude 3.5 sonnet]**
+
+    *   Predefine model selection based on task type.
+    *   Log and monitor model responses for continuous improvement.
+    *   Provide fallback mechanisms for API errors.
+
+*   **[gemini 2.5]**
+
+    *   Validate compatibility within system workflows.
+    *   Log outbound API calls and responses for debugging.
+    *   Test thoroughly before deployment.
+
+*   **[gpt-4]**
+
+    *   Utilize for generating complex and context-aware content.
+    *   Optimize token management and prompt structuring.
+    *   Continuously monitor response quality.
+
+*   **[perplexity]**
+
+    *   Use for aggregating web data in real-time.
+    *   Validate scraped data before processing.
+    *   Implement rate limit handling.
+
+*   **[firecrawl]**
+
+    *   Ensure robust and ethical web scraping practices.
+    *   Validate and sanitize competitor data.
+    *   Incorporate fallback strategies for rate limiting.
+
+## Rules
+
+*   Derive folder/file patterns **directly** from techStackDoc versions.
+*   If Next.js 14 App Router: Enforce `app/` directory with nested route folders.
+*   If Pages Router: Use `pages/*.tsx` flat structure.
+*   Mirror this logic for React Router, SvelteKit, etc.
+*   Never mix version patterns (e.g., no `pages/` in App Router projects).
+
+## Rules Metrics
+
+Before starting the project development, create a metrics file in the root of the project called
+
+`cursor_metrics.md`.
+
+### Instructions:
+
+*   Each time a cursor rule is used as context, update `cursor_metrics.md`.
+*   Use the following format for `cursor_metrics.md`:
+
+# Rules Metrics
+
+## Usage
+
+The number of times rules is used as context
+
+`* rule-name.mdc: 5 * another-rule.mdc: 2 * ...other rules`
