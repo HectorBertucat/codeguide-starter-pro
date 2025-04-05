@@ -1,29 +1,38 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server"
-import { NextRequest, NextResponse } from "next/server"
+import {
+  clerkMiddleware,
+  createRouteMatcher
+} from "@clerk/nextjs/server";
+import { NextResponse } from 'next/server';
 
-// Default Next.js middleware to allow all requests
-export function middleware(request: NextRequest) {
-  return NextResponse.next()
-}
+// Define routes that require authentication
+const isProtectedRoute = createRouteMatcher([
+  '/dashboard(.*)', // Protect all dashboard routes
+  '/seo-tool(.*)',  // Protect the SEO tool route
+]);
 
-/**
- * Uncomment the following code to enable authentication with Clerk
- */
+// Make callback async and await auth()
+export default clerkMiddleware(async (auth, req) => { 
+  // Await the auth() call to get the session state
+  const authResult = await auth(); 
 
-// const isProtectedRoute = createRouteMatcher(['/protected'])
+  // Check if the route is protected and the user is not logged in
+  if (isProtectedRoute(req) && !authResult.userId) {
+    // Construct the sign-in URL, preserving the intended destination
+    const signInUrl = new URL("/sign-in", req.url);
+    signInUrl.searchParams.set("redirect_url", req.url);
+    // Redirect to the sign-in page
+    return NextResponse.redirect(signInUrl);
+  }
 
-// export default clerkMiddleware(async (auth, req) => {
-//     if (isProtectedRoute(req)) {
-//       // Handle protected routes check here
-//       return NextResponse.redirect(req.nextUrl.origin)
-//     }
-
-//     return NextResponse.next()
-// })  
+  // Allow requests to proceed
+  return NextResponse.next();
+}, { debug: true }); // Enable debug logging
 
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)|api/webhooks).*)",
+    "/((?!.+\\.[\\w]+$|_next).*)(/)?", 
+    // Re-include any files in the api or trpc folders that might have an extension
+    "/(api|trpc)(.*)"
   ],
-}
+};

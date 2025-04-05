@@ -32,6 +32,12 @@ Seoptimizer is an internal web-based tool designed for SEO agencies to streamlin
 - **DevOps:** Docker, GitHub Actions
 - **AI & Integrations:** OpenAI, Claude, Gemini, YourText.guru
 
+## Middleware
+
+Authentication middleware is handled by `middleware.ts` using Clerk (`clerkMiddleware`). It checks for a valid session (`userId`) on protected routes (currently `/dashboard/**` and `/seo-tool/**`) defined using `createRouteMatcher`. If a user is not authenticated when accessing a protected route, they are redirected to `/sign-in` with the original destination preserved as a `redirect_url` parameter.
+
+*Note:* There have been inconsistencies between runtime behavior and linter/type checking regarding the usage of `auth()` within the middleware. The current implementation uses a manual check for `userId` and `NextResponse.redirect` as the most stable approach observed during development.
+
 ## Getting Started
 
 ### Prerequisites

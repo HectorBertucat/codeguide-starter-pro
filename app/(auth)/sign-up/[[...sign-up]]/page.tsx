@@ -1,7 +1,7 @@
-import { SignIn } from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
 import Image from "next/image";
 
-export default function SignInPage() {
+export default function SignUpPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
       <div className="mb-8">
@@ -16,9 +16,11 @@ export default function SignInPage() {
       <div className="w-full max-w-md overflow-hidden rounded-lg bg-white shadow-xl">
         <div className="p-6">
           <h2 className="mb-6 text-center text-2xl font-bold text-seoptimizer-dark">
-            Sign in to Seoptimizer
+            Create your Seoptimizer account
           </h2>
-          <SignIn
+          <SignUp
+            path="/sign-up"
+            routing="path"
             appearance={{
               elements: {
                 formButtonPrimary: 
